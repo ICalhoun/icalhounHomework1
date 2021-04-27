@@ -17,7 +17,7 @@ def test_get_total_good_data():
         PurchasedItem("apple", 0.50, "Wic Eligible Food"),
     ]
     total = icalhounHomework1.calculate_total("MA", purchases)
-    assert total == 237.44
+    assert total == 235.94
     total = icalhounHomework1.calculate_total("ME", purchases)
     assert total == 235.76
     total = icalhounHomework1.calculate_total("NH", purchases)
@@ -61,3 +61,20 @@ def test_negative_price():
     negative_purchase = [PurchasedItem("refund", -22.00, "wic eligible food")]
     total = icalhounHomework1.calculate_total("MA", negative_purchase)
     assert total == 0
+
+
+def test_ma_clothes_tax_over_175():
+    purchases = [PurchasedItem("test", 199.00, "clothes")]
+    total = icalhounHomework1.calculate_total("MA", purchases)
+    assert total == 200.5
+
+    purchases = [PurchasedItem("t-shirt", 10.00, "clothes")
+                 PurchasedItem("test", 199.00, "clothes")]
+    total = icalhounHomework1.calculate_total("MA", purchases)
+    assert total == 210.5
+
+
+def test_ma_clothes_tax_under_175():
+    purchases = [PurchasedItem("t-shirt", 10.00, "clothes")]
+    total = icalhounHomework1.calculate_total("MA", purchases)
+    assert total == 10.0
