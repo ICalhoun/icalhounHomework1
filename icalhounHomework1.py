@@ -10,11 +10,23 @@ class PurchasedItem(object):
 
 def __get_tax_rate(state, items):
     tax_rates = {
-        "ma": {"clothes": 0.0, "wic eligible food": 0.0, "everything else": 0.0625},
-        "nh": {"clothes": 0.0, "wic eligible food": 0.0, "everything else": 0.0},
-        "me": {"clothes": 0.055, "wic eligible food": 0.0, "everything else": 0.055},
+        "ma": {
+            "clothes": 0.0,
+            "wic eligible food": 0.0,
+            "everything else": 0.0625,
+        },
+        "nh": {
+            "clothes": 0.0,
+            "wic eligible food": 0.0,
+            "everything else": 0.0,
+        },
+        "me": {
+            "clothes": 0.055,
+            "wic eligible food": 0.0,
+            "everything else": 0.055,
+        },
         "massachusetts": {
-            "clothes": 0.0625,
+            "clothes": 0.0,
             "wic eligible food": 0.0,
             "everything else": 0.0625,
         },
@@ -23,7 +35,11 @@ def __get_tax_rate(state, items):
             "wic eligible food": 0.0,
             "everything else": 0.0635,
         },
-        "maine": {"clothes": 0.055, "wic eligible food": 0.0, "everything else": 0.055},
+        "maine": {
+            "clothes": 0.055,
+            "wic eligible food": 0.0,
+            "everything else": 0.055,
+        },
     }
     if (
         state.lower()[:2] == "ma"
