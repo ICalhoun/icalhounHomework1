@@ -10,78 +10,6 @@ class PurchasedItem(object):
     type: str
 
 
-def test_get_tax_rate_good_data_massachusetts():
-    purchases = [
-        PurchasedItem("test", 199.00, "everything else"),
-        PurchasedItem("t-shirt", 24.00, "clothes"),
-        PurchasedItem("apple", 0.50, "Wic Eligible Food"),
-    ]
-    tax_rate = icalhounHomework1.get_tax_rate("ma", purchases[0])
-    assert tax_rate == 0.0625
-    tax_rate = icalhounHomework1.get_tax_rate("massachusetts", purchases[1])
-    assert tax_rate == 0.0625
-    tax_rate = icalhounHomework1.get_tax_rate("MA", purchases[2])
-    assert tax_rate == 0.0
-
-
-def test_get_tax_rate_good_data_maine():
-    purchases = [
-        PurchasedItem("test", 199.00, "everything else"),
-        PurchasedItem("t-shirt", 24.00, "clothes"),
-        PurchasedItem("apple", 0.50, "Wic Eligible Food"),
-    ]
-    tax_rate = icalhounHomework1.get_tax_rate("me", purchases[0])
-    assert tax_rate == 0.055
-    tax_rate = icalhounHomework1.get_tax_rate("maine", purchases[1])
-    assert tax_rate == 0.055
-    tax_rate = icalhounHomework1.get_tax_rate("ME", purchases[2])
-    assert tax_rate == 0.0
-
-
-def test_get_tax_rate_good_data_connecticut():
-    purchases = [
-        PurchasedItem("test", 199.00, "everything else"),
-        PurchasedItem("t-shirt", 24.00, "clothes"),
-        PurchasedItem("apple", 0.50, "Wic Eligible Food"),
-    ]
-    tax_rate = icalhounHomework1.get_tax_rate("ct", purchases[0])
-    assert tax_rate == 0.0635
-    tax_rate = icalhounHomework1.get_tax_rate("connecticut", purchases[1])
-    assert tax_rate == 0.0635
-    tax_rate = icalhounHomework1.get_tax_rate("CT", purchases[2])
-    assert tax_rate == 0.0
-
-
-def test_get_tax_rate_bad_data_ma():
-    purchases = [PurchasedItem("test", 199.00, "everything else")]
-    with pytest.raises(KeyError):
-        tax_rate = icalhounHomework1.get_tax_rate("CA", purchases)
-        assert tax_rate == 0.0
-
-
-def test_get_price_with_tax_good_data():
-    purchases = [PurchasedItem("test", 199.00, "everything else")]
-    price_with_tax = icalhounHomework1.get_price_with_tax("MA", purchases[0])
-    assert price_with_tax == 211.4375
-    price_with_tax = icalhounHomework1.get_price_with_tax("ME", purchases[0])
-    assert price_with_tax == 209.945
-    price_with_tax = icalhounHomework1.get_price_with_tax("CT", purchases[0])
-    assert price_with_tax == 211.6365
-
-
-def test_get_price_with_tax_bad_data():
-    purchases = [
-        PurchasedItem("test", "199", "clothes"),
-        PurchasedItem("apple", 3.0, "none"),
-    ]
-    with pytest.raises(TypeError):
-        price_with_tax = icalhounHomework1.get_price_with_tax("MA", purchases[0])
-        assert price_with_tax == 211.4375
-    with pytest.raises(KeyError):
-        price_with_tax = icalhounHomework1.get_price_with_tax("MA", purchases[1])
-        assert price_with_tax == 3.1875
-
-
 def test_get_total_good_data():
     purchases = [
         PurchasedItem("test", 199.00, "everything else"),
@@ -96,23 +24,38 @@ def test_get_total_good_data():
     assert total == 237.66
 
 
-def test_get_total_bad_data():
+def test_get_total_price_is_not_float():
     purchases = [
         PurchasedItem("test", "199", "everything else"),
         PurchasedItem("t-shirt", 24.00, "clothes"),
         PurchasedItem("apple", 0.50, "Wic Eligible Food"),
     ]
-    purchases2 = [PurchasedItem("test", 2.00, 1)]
-    good_purchase = [PurchasedItem("t-shirt", 24.00, "clothing")]
-    negative_purchase = [PurchasedItem("refund", -22.00, "wic eligible food")]
     with pytest.raises(TypeError):
         total = icalhounHomework1.calculate_total("MA", purchases)
         assert total == 211.4375
+
+
+def test_type_is_not_string():
+    purchases = [PurchasedItem("test", 2.00, 1),
+                 PurchasedItem("t-shirt", 24.00, "clothes"),
+                 PurchasedItem("apple", 0.50, "Wic Eligible Food"),
+                  ]
     with pytest.raises(AttributeError):
-        total = icalhounHomework1.calculate_total("MA", purchases2)
+        total = icalhounHomework1.calculate_total("MA", purchases)
         assert total == 2.125
+
+
+def test_unsupported_state():
+    good_purchase = [PurchasedItem("t-shirt", 24.00, "clothing"),
+                     PurchasedItem("t-shirt", 24.00, "clothes"),
+                     PurchasedItem("apple", 0.50, "Wic Eligible Food"),
+                     ]
     with pytest.raises(KeyError):
         total = icalhounHomework1.calculate_total("CA", good_purchase)
         assert total == 0
+
+
+def test_negative_price():
+    negative_purchase = [PurchasedItem("refund", -22.00, "wic eligible food")]
     total = icalhounHomework1.calculate_total("MA", negative_purchase)
     assert total == 0
