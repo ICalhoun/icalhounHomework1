@@ -56,6 +56,7 @@ def test_get_tax_rate_bad_data_ma():
     purchases = [PurchasedItem("test", 199.00, "everything else")]
     with pytest.raises(KeyError):
         tax_rate = icalhounHomework1.get_tax_rate("CA", purchases)
+        assert tax_rate == 0.0
 
 
 def test_get_price_with_tax_good_data():
@@ -75,8 +76,10 @@ def test_get_price_with_tax_bad_data():
     ]
     with pytest.raises(TypeError):
         price_with_tax = icalhounHomework1.get_price_with_tax("MA", purchases[0])
+        assert price_with_tax == 211.4375
     with pytest.raises(KeyError):
         price_with_tax = icalhounHomework1.get_price_with_tax("MA", purchases[1])
+        assert price_with_tax == 3.1875
 
 
 def test_get_total_good_data():
@@ -98,5 +101,7 @@ def test_get_total_bad_data():
     purchases2 = [PurchasedItem("test", 2.00, 1)]
     with pytest.raises(TypeError):
         total = icalhounHomework1.calculate_total("MA", purchases)
+        assert total == 211.4375
     with pytest.raises(AttributeError):
         total = icalhounHomework1.calculate_total("MA", purchases2)
+        assert total == 2.125
