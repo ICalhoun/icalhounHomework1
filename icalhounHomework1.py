@@ -1,57 +1,40 @@
 from dataclasses import dataclass
 
+
 @dataclass()
-class item(object):
+class PurchasedItem(object):
     name: str
     price: float
     type: str
 
 
-def get_tax(state, items):
-    if state == 'MA':
-        if items.type == 'clothes':
-            if items.price < 175.0:
-                return 0
-            else:
-                return .0625
-        elif items.type == 'Wic eligible food':
-            return 0
-        else:
-            return .0625
-    elif state == 'CT':
-        if items.type == 'clothes':
-            if items.price < 1000.00:
-                return .0635
-            else:
-                return .0775
-        elif items.type == 'Wic eligible food":':
-            return 0
-        else:
-            return .0635
-    else:
-        if items.type == 'clothes':
-            return .055
-        elif items.type == 'WiC eligible food':
-            return 0
-        else:
-            return .055
+def get_tax_rate(state, items):
+    tax_rates = {'ma': {'clothes': .0625, 'wic eligible food': 0.0 ,'everything else': .0625},
+                 'ct': {'clothes': .0635, 'wic eligible food': 0.0, 'everything else': .0635},
+                 'me': {'clothes': .055, 'wic eligible food': 0.0, 'everything else': .055},
+                 'massachusetts': {'clothes': .0625, 'wic eligible food': 0.0,'everything else': .0625},
+                 'connecticut': {'clothes': .0635, 'wic eligible food': 0.0, 'everything else': .0635},
+                 'maine': {'clothes': .055, 'wic eligible food': 0.0, 'everything else': .055}}
+    return tax_rates[state.lower()][items.type.lower()]
 
 
-def get_price_with_tax(tax, price):
-    calculated_tax = tax * price
-    taxed_price = calculated_tax + price
+def get_price_with_tax(state, item):
+    tax_rate = get_tax_rate(state, item)
+    taxed_price = (tax_rate * item.price) + item.price
     return taxed_price
 
 
-def calculate_total(state, receipt):
+def calculate_total(state, customer_items):
     total = 0
-    for items in receipt:
-        tax = get_tax(state, items)
+    for items in customer_items:
         if items.price > 0.0:
-            total = total + get_price_with_tax(tax, items.price)
-    return total
+            total = total + get_price_with_tax(state, items)
+    return round(total, 2)
 
 
 if __name__ == "__main__":
-    receipt = [item("test", 199.00, "clothes"), item('test2', 10.00, 'other'), item('test3', 10.00, 'other')]
-    print(calculate_total('MA', receipt))
+    purchases = [PurchasedItem("test", 199.00, "clothes"),
+                 PurchasedItem('test2', 10.00, 'everything else'),
+                 PurchasedItem('test3', 10.00, 'everything else')]
+
+    print(calculate_total('MA', purchases))
