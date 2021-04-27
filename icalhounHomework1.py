@@ -9,12 +9,12 @@ class PurchasedItem(object):
 
 
 def get_tax_rate(state, items):
-    tax_rates = {'ma': {'clothes': .0625, 'wic eligible food': 0.0 ,'everything else': .0625},
-                 'ct': {'clothes': .0635, 'wic eligible food': 0.0, 'everything else': .0635},
-                 'me': {'clothes': .055, 'wic eligible food': 0.0, 'everything else': .055},
-                 'massachusetts': {'clothes': .0625, 'wic eligible food': 0.0,'everything else': .0625},
-                 'connecticut': {'clothes': .0635, 'wic eligible food': 0.0, 'everything else': .0635},
-                 'maine': {'clothes': .055, 'wic eligible food': 0.0, 'everything else': .055}}
+    tax_rates = {'ma': {'clothes': 0.0625, 'wic eligible food': 0.0, 'everything else': 0.0625},
+                 'ct': {'clothes': 0.0635, 'wic eligible food': 0.0, 'everything else': 0.0635},
+                 'me': {'clothes': 0.055, 'wic eligible food': 0.0, 'everything else': 0.055},
+                 'massachusetts': {'clothes': 0.0625, 'wic eligible food': 0.0, 'everything else': 0.0625},
+                 'connecticut': {'clothes': 0.0635, 'wic eligible food': 0.0, 'everything else': 0.0635},
+                 'maine': {'clothes': 0.055, 'wic eligible food': 0.0, 'everything else': 0.055}}
     return tax_rates[state.lower()][items.type.lower()]
 
 
