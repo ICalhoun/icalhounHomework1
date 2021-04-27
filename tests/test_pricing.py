@@ -99,9 +99,13 @@ def test_get_total_good_data():
 def test_get_total_bad_data():
     purchases = [PurchasedItem("test", "199", "everything else")]
     purchases2 = [PurchasedItem("test", 2.00, 1)]
+    good_purchase = [PurchasedItem("t-shirt", 24.00, "clothing")]
     with pytest.raises(TypeError):
         total = icalhounHomework1.calculate_total("MA", purchases)
         assert total == 211.4375
     with pytest.raises(AttributeError):
         total = icalhounHomework1.calculate_total("MA", purchases2)
         assert total == 2.125
+    with pytest.raises(KeyError):
+        total = icalhounHomework1.calculate_total("CA", good_purchase)
+        assert total == 0
