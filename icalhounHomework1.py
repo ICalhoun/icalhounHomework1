@@ -9,12 +9,22 @@ class PurchasedItem(object):
 
 
 def get_tax_rate(state, items):
-    tax_rates = {'ma': {'clothes': 0.0625, 'wic eligible food': 0.0, 'everything else': 0.0625},
-                 'ct': {'clothes': 0.0635, 'wic eligible food': 0.0, 'everything else': 0.0635},
-                 'me': {'clothes': 0.055, 'wic eligible food': 0.0, 'everything else': 0.055},
-                 'massachusetts': {'clothes': 0.0625, 'wic eligible food': 0.0, 'everything else': 0.0625},
-                 'connecticut': {'clothes': 0.0635, 'wic eligible food': 0.0, 'everything else': 0.0635},
-                 'maine': {'clothes': 0.055, 'wic eligible food': 0.0, 'everything else': 0.055}}
+    tax_rates = {
+        "ma": {"clothes": 0.0625, "wic eligible food": 0.0, "everything else": 0.0625},
+        "ct": {"clothes": 0.0635, "wic eligible food": 0.0, "everything else": 0.0635},
+        "me": {"clothes": 0.055, "wic eligible food": 0.0, "everything else": 0.055},
+        "massachusetts": {
+            "clothes": 0.0625,
+            "wic eligible food": 0.0,
+            "everything else": 0.0625,
+        },
+        "connecticut": {
+            "clothes": 0.0635,
+            "wic eligible food": 0.0,
+            "everything else": 0.0635,
+        },
+        "maine": {"clothes": 0.055, "wic eligible food": 0.0, "everything else": 0.055},
+    }
     return tax_rates[state.lower()][items.type.lower()]
 
 
@@ -33,8 +43,10 @@ def calculate_total(state, customer_items):
 
 
 if __name__ == "__main__":
-    purchases = [PurchasedItem("test", 199.00, "clothes"),
-                 PurchasedItem('test2', 10.00, 'everything else'),
-                 PurchasedItem('test3', 10.00, 'everything else')]
+    purchases = [
+        PurchasedItem("test", 199.00, "clothes"),
+        PurchasedItem("test2", 10.00, "everything else"),
+        PurchasedItem("test3", 10.00, "everything else"),
+    ]
 
-    print(calculate_total('MA', purchases))
+    print(calculate_total("MA", purchases))
