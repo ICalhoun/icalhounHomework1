@@ -68,7 +68,7 @@ def test_ma_clothes_tax_over_175():
     total = icalhounHomework1.calculate_total("MA", purchases)
     assert total == 200.5
 
-    purchases = [PurchasedItem("t-shirt", 10.00, "clothes")
+    purchases = [PurchasedItem("t-shirt", 10.00, "clothes"),
                  PurchasedItem("test", 199.00, "clothes")]
     total = icalhounHomework1.calculate_total("MA", purchases)
     assert total == 210.5
