@@ -11,14 +11,14 @@ class PurchasedItem(object):
 def __get_tax_rate(state, items):
     tax_rates = {
         "ma": {"clothes": 0.0625, "wic eligible food": 0.0, "everything else": 0.0625},
-        "ct": {"clothes": 0.0635, "wic eligible food": 0.0, "everything else": 0.0635},
+        "nh": {"clothes": 0.0, "wic eligible food": 0.0, "everything else": 0.0},
         "me": {"clothes": 0.055, "wic eligible food": 0.0, "everything else": 0.055},
         "massachusetts": {
             "clothes": 0.0625,
             "wic eligible food": 0.0,
             "everything else": 0.0625,
         },
-        "connecticut": {
+        "new hampshire": {
             "clothes": 0.0635,
             "wic eligible food": 0.0,
             "everything else": 0.0635,
