@@ -97,9 +97,14 @@ def test_get_total_good_data():
 
 
 def test_get_total_bad_data():
-    purchases = [PurchasedItem("test", "199", "everything else")]
+    purchases = [
+        PurchasedItem("test", "199", "everything else"),
+        PurchasedItem("t-shirt", 24.00, "clothes"),
+        PurchasedItem("apple", 0.50, "Wic Eligible Food"),
+    ]
     purchases2 = [PurchasedItem("test", 2.00, 1)]
     good_purchase = [PurchasedItem("t-shirt", 24.00, "clothing")]
+    negative_purchase = [PurchasedItem("refund", -22.00, "wic eligible food")]
     with pytest.raises(TypeError):
         total = icalhounHomework1.calculate_total("MA", purchases)
         assert total == 211.4375
@@ -109,3 +114,5 @@ def test_get_total_bad_data():
     with pytest.raises(KeyError):
         total = icalhounHomework1.calculate_total("CA", good_purchase)
         assert total == 0
+    total = icalhounHomework1.calculate_total("MA", negative_purchase)
+    assert total == 0
